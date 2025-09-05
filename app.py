@@ -22,7 +22,7 @@ def whatsapp_reply():
     
     # Llamar a GPT
     response = client.chat.completions.create(
-    model="gpt-5-mini",
+    model="gpt-4o-mini",
     
     messages=[
         {"role": "system", "content": f"Sos un vendedor de espejos. Catálogo:\n{catalogo}. Respondé con simpatía, claridad y brevedad. No uses más de 3 líneas."},
@@ -30,7 +30,6 @@ def whatsapp_reply():
 )
     reply = response.choices[0].message.content
 
-    time.sleep(5)
 
     # Responder por WhatsApp
     twilio_response = MessagingResponse()
