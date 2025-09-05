@@ -16,6 +16,11 @@ client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 df = pd.read_excel("espejos.xlsx")
 catalogo = "\n".join([f"{row['Modelo']}: ${row['Precio']}" for _, row in df.iterrows()])
 
+@app.route("/", methods=["GET"])
+def health():
+    # Render hace GET / para healthcheck; devolvé 200
+    return "ok", 200
+
 @app.route("/webhook", methods=["POST"])
 def whatsapp_reply():
     incoming_msg = request.values.get("Body", "").strip()
