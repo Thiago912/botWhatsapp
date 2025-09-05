@@ -14,7 +14,7 @@ app = Flask(__name__)
 client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
 df = pd.read_excel("espejos.xlsx")
-catalogo = "\n".join([f"{row['modelo']}: ${row['precio']}" for _, row in df.iterrows()])
+catalogo = "\n".join([f"{row['Modelo']}: ${row['Precio']}" for _, row in df.iterrows()])
 
 @app.route("/webhook", methods=["POST"])
 def whatsapp_reply():
