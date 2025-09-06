@@ -21,7 +21,10 @@ def health():
     # Render hace GET / para healthcheck; devolvé 200
     return "ok", 200
 
-@app.route("/webhook", methods=["POST"])
+@app.route("/", methods=["POST"])
+def root_post():
+    # opcional: log para ver que Twilio llega acá
+    app.logger.info("POST / recibido; redirigiendo a whatsapp_reply()")
 def whatsapp_reply():
     incoming_msg = request.values.get("Body", "").strip()
     
