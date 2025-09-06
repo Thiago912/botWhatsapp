@@ -75,7 +75,7 @@ def generar_respuesta_ia(mensaje_usuario: str) -> str:
 
     try:
         completion = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5-mini",
             messages=[
                 {
                     "role": "system",
