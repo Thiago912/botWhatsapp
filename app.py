@@ -10,6 +10,9 @@ from twilio.twiml.messaging_response import MessagingResponse
 from openai import OpenAI
 import pandas as pd
 
+TWILIO_SID = os.getenv("TWILIO_ACCOUNT_SID")
+TWILIO_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("whatsapp-bot")
@@ -150,12 +153,13 @@ def whatsapp_reply():
                 continue
 
             try:
-                r = requests.get(media_url, timeout=10)
+                # Descarga autenticada: Twilio media requiere Basic Auth
+                r = requests.get(media_url, auth=(TWILIO_SID, TWILIO_TOKEN), timeout=12)
                 r.raise_for_status()
                 du = _to_data_url(r.content, mime)
                 images_data_urls.append(du)
             except Exception:
-                logger.exception("No pude descargar la imagen %s", media_url)
+                logger.exception("No pude descargar la imagen autenticado desde Twilio")
 
     # Si recibimos al menos una imagen compatible → usar visión
     if images_data_urls:
